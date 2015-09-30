@@ -23,7 +23,10 @@ class nfs::server::redhat(
       target   => '/etc/sysconfig/nfs',
       variable => 'MOUNTD_PORT',
       value    => $mountd_port,
-      notify   => Service[$service_name],
+    }
+
+    if $nfs::server::service_manage {
+      Shellvar['rpc-mount-options'] ~> Service[$service_name]
     }
   }
 

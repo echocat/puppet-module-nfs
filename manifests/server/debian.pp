@@ -19,7 +19,10 @@ class nfs::server::debian(
       target   => '/etc/default/nfs-kernel-server',
       variable => 'RPCMOUNTDOPTS',
       value    => "--manage-gids --port ${mountd_port} --num-threads ${mountd_threads}",
-      notify   => Service['nfs-kernel-server'],
+    }
+
+    if $nfs::server::service_manage {
+      Shellvar['rpc-mount-options'] ~> Service['nfs-kernel-server']
     }
   }
 
