@@ -13,9 +13,13 @@
 #   Export root, where we bind mount shares, default /export
 #
 # [nfs_v4_idmap_domain]
-#  Domain setting for idmapd, must be the same across server
-#  and clients.
-#  Default is to use $domain fact.
+#   Domain setting for idmapd, must be the same across server
+#   and clients.
+#   Default is to use $domain fact.
+#
+# [service_manage]
+#   Should this service manage the services behind nfs? Set this to false
+#   if you are managing the service in another way (e.g. pacemaker).
 #
 # === Examples
 #
@@ -33,6 +37,8 @@ class nfs::server (
   $nfs_v4_export_root           = $nfs::params::nfs_v4_export_root,
   $nfs_v4_export_root_clients   = $nfs::params::nfs_v4_export_root_clients,
   $nfs_v4_idmap_domain          = $nfs::params::nfs_v4_idmap_domain,
+  #
+  $service_manage               = true,
   #
   $nfs_v4_root_export_ensure    = 'mounted',
   $nfs_v4_root_export_mount     = undef,
