@@ -37,7 +37,6 @@ class nfs::client::redhat::service {
     }
   }
 
-
   if $::nfs::client::redhat::params::osmajor == 6 or $::nfs::client::redhat::params::osmajor == 7 {
     service {'rpcbind':
       ensure    => running,
