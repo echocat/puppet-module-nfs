@@ -42,8 +42,8 @@ class nfs::server (
   $nfs_v4_root_export_bindmount = undef,
   $nfs_v4_root_export_tag       = undef,
   #
-  $mountd_port                   = undef,
-  $mountd_threads                = 1
+  $mountd_port                  = undef,
+  $mountd_threads               = 1
 ) inherits nfs::params {
 
   class { "nfs::server::${::nfs::params::osfamily}":
