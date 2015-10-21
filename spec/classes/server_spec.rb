@@ -17,21 +17,21 @@ describe 'nfs::server' do
     let(:facts) { {:operatingsystem => 'ubuntu', :concat_basedir => '/tmp', } }
     it { should contain_class('nfs::server::ubuntu') }
   end
-  
+
   context "operatingsysten => ubuntu with params for mountd" do
     let(:facts) { {:operatingsystem => 'ubuntu', :concat_basedir => '/tmp', } }
     let(:params) {{ :mountd_port => '4711', :mountd_threads => '99' }}
-    
-    it do 
+
+    it do
      should contain_class('nfs::server::ubuntu').with( 'mountd_port' => '4711', 'mountd_threads' => '99' )
     end
   end
-  
+
   context "operatingsysten => debian" do
     let(:facts) { {:operatingsystem => 'debian', :concat_basedir => '/tmp',} }
     it { should contain_class('nfs::server::debian') }
   end
-  
+
   context "operatingsysten => scientific" do
     let(:facts) { {:operatingsystem => 'scientific', :concat_basedir => '/tmp', :operatingsystemrelease => '6.4' } }
     it { should contain_class('nfs::server::redhat') }
@@ -40,7 +40,7 @@ describe 'nfs::server' do
     let(:facts) { {:operatingsystem => 'SLC', :concat_basedir => '/tmp', :operatingsystemrelease => '6.4' } }
     it { should contain_class('nfs::server::redhat') }
   end
-  
+
   context "operatingsysten => centos v6" do
     let(:facts) { {:operatingsystem => 'centos', :concat_basedir => '/tmp', :operatingsystemrelease => '6.4' } }
     it { should contain_class('nfs::server::redhat') }
@@ -51,6 +51,10 @@ describe 'nfs::server' do
   end
   context "operatingsysten => Amazon v3" do
     let(:facts) { {:operatingsystem => 'Amazon', :concat_basedir => '/tmp', :operatingsystemrelease => '3.10.35-43.137.amzn1.x86_64' } }
+    it { should contain_class('nfs::server::redhat') }
+  end
+  context "operatingsysten => Amazon v3" do
+    let(:facts) { {:operatingsystem => 'Amazon', :concat_basedir => '/tmp', :operatingsystemrelease => '4.1.7-15.23.amzn1.x86_64' } }
     it { should contain_class('nfs::server::redhat') }
   end
   context "operatingsysten => gentoo" do

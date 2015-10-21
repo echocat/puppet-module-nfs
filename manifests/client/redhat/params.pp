@@ -18,7 +18,7 @@ class nfs::client::redhat::params {
       $osmajor = 7
     }
     # Amazon linux operatingsystemrelease is verbose: 3.10.35-43.137.amzn1.x86_64
-    /^3\.(\d|-|\.)+(amzn){1}/: {
+    /^[34]\.(\d|-|\.)+(amzn){1}/: {
       $osmajor = 6
     }
     default:{
@@ -26,5 +26,3 @@ class nfs::client::redhat::params {
     }
   }
 }
-
-
