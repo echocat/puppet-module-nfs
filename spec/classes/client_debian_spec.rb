@@ -10,9 +10,6 @@ describe 'nfs::client::debian' do
       'ensure' => 'running'
     )
 
-    should contain_service('idmapd').with(
-      'ensure' => 'stopped'
-    )
     should contain_package('nfs-common')
     should contain_package('rpcbind')
     
