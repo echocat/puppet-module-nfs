@@ -26,7 +26,7 @@ describe 'nfs::server::redhat' do
     context "mountd params set" do
       let(:params) {{ :mountd_port => '4711' }}
       it do
-        should contain_shellvar('rpc-mount-options') #.with( 'ensure' => 'present' )
+        should contain_file_line('rpc-mount-options') #.with( 'ensure' => 'present' )
       end
     end
   end

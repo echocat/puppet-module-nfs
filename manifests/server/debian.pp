@@ -15,15 +15,15 @@ class nfs::server::debian(
   }
 
   if ($mountd_port != undef){
-    shellvar { 'rpc-mount-options':
-      ensure   => present,
-      target   => '/etc/default/nfs-kernel-server',
-      variable => 'RPCMOUNTDOPTS',
-      value    => "--manage-gids --port ${mountd_port} --num-threads ${mountd_threads}",
+    file_line { 'rpc-mount-options':
+      ensure => present,
+      path   => '/etc/default/nfs-kernel-server',
+      line   => "RPCMOUNTDOPTS=--manage-gids --port ${mountd_port} --num-threads ${mountd_threads}",
+      match  => '^#?RPCMOUNTDOPTS';
     }
 
     if $service_manage {
-      Shellvar['rpc-mount-options'] ~> Service['nfs-kernel-server']
+      File_line['rpc-mount-options'] ~> Service['nfs-kernel-server']
     }
   }
 

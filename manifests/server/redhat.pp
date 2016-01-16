@@ -19,15 +19,15 @@ class nfs::server::redhat(
   }
 
   if ($mountd_port != undef){
-    shellvar { 'rpc-mount-options':
-      ensure   => present,
-      target   => '/etc/sysconfig/nfs',
-      variable => 'MOUNTD_PORT',
-      value    => $mountd_port,
+    file_line { 'rpc-mount-options':
+      ensure => present,
+      path   => '/etc/sysconfig/nfs',
+      line   => "MOUNTD_PORT=${mountd_port}",
+      match  => '^#?MOUNTD_PORT';
     }
 
     if $service_manage {
-      Shellvar['rpc-mount-options'] ~> Service[$service_name]
+      File_line['rpc-mount-options'] ~> Service[$service_name]
     }
   }
 

@@ -42,6 +42,8 @@ Gemfile.lock
 
 # idea
 ./idea
+.idea/
+*.iml
 
 # geppetto/eclipse
 .project
