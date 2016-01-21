@@ -8,7 +8,6 @@ class nfs::client::redhat::service {
   service {'nfslock':
     ensure    => running,
     name      => $::nfs::client::redhat::params::osmajor ? {
-      7       => 'rpc-statd',
       default => 'nfslock'
     },
     enable    => $::nfs::client::redhat::params::osmajor ? {
