@@ -57,4 +57,12 @@ describe 'nfs::client' do
       }.to raise_error(Puppet::Error, /NFS client is not supported on Darwin/)
     end
   end
+  context "Mount manually set" do
+    let(:title) { '/srv/test' }
+    let(:facts) { { :operatingsystem => 'ubuntu', :clientcert => 'test.example.com' } }
+    let(:params) { mounts: { :server => 'nfs.int.net', :share => '/srv/share' } }
+    it do
+      should compile
+      should contain_class('nfs::client')
+  end
 end
