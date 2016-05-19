@@ -51,3 +51,6 @@ Gemfile.lock
 # others
 *swp
 .DS_Store
+
+vagrant/puppet/modules/*
+vagrant/puppet/logs/*

@@ -1,11 +1,31 @@
-# The baseline for module testing used by Puppet Labs is that each manifest
-# should have a corresponding test manifest that declares that class or defined
-# type.
-#
-# Tests are then run by using puppet apply --noop (to check for compilation errors
-# and view a log of events) or by fully applying the test in a virtual environment
-# (to compare the resulting system state to the desired state).
-#
-# Learn more about module testing here: http://docs.puppetlabs.com/guides/tests_smoke.html
-#
-include nfs::server
+## Simple Server/Client test of NFS
+
+## Setup the Server
+file{['/mnt/nfs','/mnt/nfs_client']:
+  ensure => directory,
+}
+
+class{'nfs::server':
+  require => File['/mnt/nfs','/mnt/nfs_client'],
+}
+
+nfs::server::export { '/mnt/nfs':
+  ensure  => mounted,
+  clients => ['localhost(rw,async)'],
+  require => Class['nfs::server'],
+}
+
+
+## Setup the client
+class{'nfs::client':
+  require => Nfs::Server::Export['/mnt/nfs'],
+}
+
+mount{'/mnt/nfs_client':
+  ensure  => mounted,
+  fstype  => 'nfs4',
+  device  => 'localhost:/mnt/nfs',
+  options => 'defaults',
+  atboot  => true,
+  require => Class['nfs::client']
+}
