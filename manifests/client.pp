@@ -29,6 +29,7 @@
 #  }
 
 class nfs::client (
+  $package_ensure      = $::nfs::params::client_package_ensure,
   $nfs_v4              = $::nfs::params::nfs_v4,
   $nfs_v4_mount_root   = $::nfs::params::nfs_v4_mount_root,
   $nfs_v4_idmap_domain = $::nfs::params::nfs_v4_idmap_domain

@@ -33,6 +33,7 @@
 #  }
 
 class nfs::server (
+  $package_ensure               = $::nfs::params::server_package_ensure,
   $nfs_v4                       = $nfs::params::nfs_v4,
   $nfs_v4_export_root           = $nfs::params::nfs_v4_export_root,
   $nfs_v4_export_root_clients   = $nfs::params::nfs_v4_export_root_clients,
