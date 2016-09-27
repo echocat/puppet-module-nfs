@@ -5,6 +5,10 @@
 #
 # === Parameters
 #
+# [package_ensure]
+#   Allow to update or set to a specific version the nfs server packages
+#   Default to installed.
+#
 # [nfs_v4]
 #   NFSv4 support. Will set up automatic bind mounts to export root.
 #   Disabled by default.

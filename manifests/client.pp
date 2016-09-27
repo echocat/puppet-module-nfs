@@ -5,6 +5,10 @@
 #
 # === Parameters
 #
+# [package_ensure]
+#   Allow to update or set to a specific version the nfs client packages
+#   Default to installed.
+#
 # [nfs_v4]
 #   NFSv4 support.
 #   Disabled by default.
