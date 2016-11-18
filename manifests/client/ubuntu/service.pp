@@ -6,7 +6,7 @@ class nfs::client::ubuntu::service {
     hasstatus => false,
   }
 
-  if versioncmp($operatingsystemrelease, '16.04') == -1 {
+  if versioncmp($::operatingsystemrelease, '16.04') == -1 {
 
     if $nfs::client::ubuntu::nfs_v4 {
       service { 'idmapd':
