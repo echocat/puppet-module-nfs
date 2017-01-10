@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+#require './config.lucid.rb'
+#require './config.precise.rb'
+#require './config.trusty.rb'
+require './config.vivid.rb'
+include MyVars
+
+Vagrant.configure("2") do |config|
+
+  # set the boxes dynamically
+  config.vm.box     = OS
+  config.vm.box_url = OS_URL
+  
+  # system memory
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 2048
+  end
+
+  # default ip address
+  config.vm.network "private_network", ip: "192.168.33.10"
+
+  # setup puppet
+  config.vm.provision :shell, :path => "scripts/upgrade-puppet.sh"
+
+  # puppet configuration
+  config.vm.provision "puppet" do |puppet|
+    puppet.module_path    = ["puppet/modules/","../../"]
+    puppet.manifests_path = "../tests"
+    puppet.manifest_file  = "init.pp"
+  end
+end
