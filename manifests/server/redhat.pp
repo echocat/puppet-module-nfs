@@ -53,8 +53,8 @@ class nfs::server::redhat(
     file_line { 'statd-outgoingport':
       ensure => present,
       path   => '/etc/sysconfig/nfs',
-      line   => "STATD_OUTGOINGPORT=${statd_outgoingport}",
-      match  => '^#?STATD_OUTGOINGPORT';
+      line   => "STATD_OUTGOING_PORT=${statd_outgoingport}",
+      match  => '^#?STATD_OUTGOING_PORT';
     }
 
     if $service_manage {
