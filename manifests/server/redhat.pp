@@ -3,6 +3,11 @@ class nfs::server::redhat(
   $nfs_v4_idmap_domain = undef,
   $mountd_port         = undef,
   $mountd_threads      = 1,
+  $statd_port          = undef,
+  $statd_outgoingport  = undef,
+  $lockd_tcpport       = undef,
+  $lockd_udpport       = undef,
+  $rquotad_udpport     = undef,
   $service_manage      = true,
 ) {
   if $::operatingsystemmajrelease and $::operatingsystemmajrelease =~ /^7/ {
@@ -19,7 +24,7 @@ class nfs::server::redhat(
   }
 
   if ($mountd_port != undef){
-    file_line { 'rpc-mount-options':
+    file_line { 'mountd-port':
       ensure => present,
       path   => '/etc/sysconfig/nfs',
       line   => "MOUNTD_PORT=${mountd_port}",
@@ -27,7 +32,72 @@ class nfs::server::redhat(
     }
 
     if $service_manage {
-      File_line['rpc-mount-options'] ~> Service[$service_name]
+      File_line['mountd-port'] ~> Service[$service_name]
+    }
+  }
+
+  if ($statd_port != undef){
+    file_line { 'statd-port':
+      ensure => present,
+      path   => '/etc/sysconfig/nfs',
+      line   => "STATD_PORT=${statd_port}",
+      match  => '^#?STATD_PORT';
+    }
+
+    if $service_manage {
+      File_line['statd-port'] ~> Service[$service_name]
+    }
+  }
+
+  if ($statd_outgoingport != undef){
+    file_line { 'statd-outgoingport':
+      ensure => present,
+      path   => '/etc/sysconfig/nfs',
+      line   => "STATD_OUTGOINGPORT=${statd_outgoingport}",
+      match  => '^#?STATD_OUTGOINGPORT';
+    }
+
+    if $service_manage {
+      File_line['statd-outgoingport'] ~> Service[$service_name]
+    }
+  }
+
+  if ($lockd_tcpport != undef){
+    file_line { 'lockd-tcpport':
+      ensure => present,
+      path   => '/etc/sysconfig/nfs',
+      line   => "LOCKD_TCPPORT=${lockd_tcpport}",
+      match  => '^#?LOCKD_TCPPORT';
+    }
+
+    if $service_manage {
+      File_line['lockd-tcpport'] ~> Service[$service_name]
+    }
+  }
+
+  if ($lockd_udpport != undef){
+    file_line { 'lockd-udpport':
+      ensure => present,
+      path   => '/etc/sysconfig/nfs',
+      line   => "LOCKD_UDPPORT=${lockd_udpport}",
+      match  => '^#?LOCKD_UDPPORT';
+    }
+
+    if $service_manage {
+      File_line['lockd-udpport'] ~> Service[$service_name]
+    }
+  }
+
+  if ($quotad_port != undef){
+    file_line { 'quotad-port':
+      ensure => present,
+      path   => '/etc/sysconfig/nfs',
+      line   => "QUOTAD_PORT=${quotad_port}",
+      match  => '^#?QUOTAD_PORT';
+    }
+
+    if $service_manage {
+      File_line['quotad-port'] ~> Service[$service_name]
     }
   }
 

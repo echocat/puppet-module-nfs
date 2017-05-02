@@ -51,6 +51,14 @@ class nfs::server (
   $mountd_port                  = undef,
   $mountd_threads               = 1,
   #
+  $statd_port                   = undef,
+  $statd_outgoingport           = undef,
+  #
+  $lockd_tcpport                = undef,
+  $lockd_udpport                = undef,
+  #
+  $rquotad_port                 = undef,
+  #
   $exports                      = undef,
 ) inherits nfs::params {
 
@@ -64,6 +72,11 @@ class nfs::server (
     nfs_v4_idmap_domain => $nfs_v4_idmap_domain,
     mountd_port         => $mountd_port,
     mountd_threads      => $mountd_threads,
+    statd_port          => $statd_port,
+    statd_outgoingport  => $statd_outgoingport,
+    lockd_tcpport       => $lockd_tcpport,
+    lockd_udpport       => $lockd_udpport,
+    rquotad_port        => $rquotad_port,
     service_manage      => $service_manage,
   }
 
