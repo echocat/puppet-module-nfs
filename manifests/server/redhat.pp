@@ -7,7 +7,7 @@ class nfs::server::redhat(
   $statd_outgoingport  = undef,
   $lockd_tcpport       = undef,
   $lockd_udpport       = undef,
-  $rquotad_udpport     = undef,
+  $rquotad_port        = undef,
   $service_manage      = true,
 ) {
   if $::operatingsystemmajrelease and $::operatingsystemmajrelease =~ /^7/ {
@@ -88,16 +88,16 @@ class nfs::server::redhat(
     }
   }
 
-  if ($quotad_port != undef){
-    file_line { 'quotad-port':
+  if ($rquotad_port != undef){
+    file_line { 'rquotad-port':
       ensure => present,
       path   => '/etc/sysconfig/nfs',
-      line   => "QUOTAD_PORT=${quotad_port}",
-      match  => '^#?QUOTAD_PORT';
+      line   => "RQUOTAD_PORT=${rquotad_port}",
+      match  => '^#?RQUOTAD_PORT';
     }
 
     if $service_manage {
-      File_line['quotad-port'] ~> Service[$service_name]
+      File_line['rquotad-port'] ~> Service[$service_name]
     }
   }
 
