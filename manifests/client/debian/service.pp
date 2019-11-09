@@ -6,7 +6,9 @@ class nfs::client::debian::service {
     hasstatus => false,
   }
 
-  if $nfs::client::debian::nfs_v4 {
+  # See https://bugs.debian.org/858274#10 why idmapd is not needed
+  # on NFSv4 clients running newer Debian releases
+  if $nfs::client::debian::nfs_v4 and versioncmp($facts['os']['release']['major'], '9') < 0 {
     service { 'idmapd':
       ensure    => running,
       enable    => true,
