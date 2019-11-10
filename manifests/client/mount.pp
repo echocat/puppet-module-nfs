@@ -1,3 +1,5 @@
+# lint:ignore:selector_inside_resource  would not add much to readability
+
 define nfs::client::mount (
   $server,
   $share,
@@ -32,7 +34,10 @@ define nfs::client::mount (
     mount {"shared ${server}:${share} by ${::clientcert} on ${_nfs4_mount}":
       ensure   => $ensure,
       device   => "${server}:/${share}",
-      fstype   => 'nfs4',
+      fstype   => $options ? {
+        default => 'nfs4',
+        /vers=/ => 'nfs',
+      },
       name     => $_nfs4_mount,
       options  => $options,
       remounts => $remounts,
@@ -82,5 +87,7 @@ define nfs::client::mount (
     }
 
   }
+
+# lint:endignore
 
 }
