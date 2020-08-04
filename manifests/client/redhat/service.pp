@@ -8,15 +8,18 @@ class nfs::client::redhat::service {
   service {'nfslock':
     ensure    => running,
     name      => $::nfs::client::redhat::params::osmajor ? {
+      8       => 'rpc-statd',
       7       => 'rpc-statd',
       default => 'nfslock'
     },
     enable    => $::nfs::client::redhat::params::osmajor ? {
+      8       => undef,
       7       => undef,
       default => true
     },
     hasstatus => true,
     require   => $::nfs::client::redhat::params::osmajor ? {
+      8 => Service['rpcbind'],
       7 => Service['rpcbind'],
       6 => Service['rpcbind'],
       5 => [Package['portmap'], Package['nfs-utils']]
@@ -33,10 +36,11 @@ class nfs::client::redhat::service {
     }
   }
 
-  if $::nfs::client::redhat::params::osmajor == 6 or $::nfs::client::redhat::params::osmajor == 7 {
+  if $::nfs::client::redhat::params::osmajor in [ 6, 7, 8 ] {
     service {'rpcbind':
       ensure    => running,
       enable    => $::nfs::client::redhat::params::osmajor ? {
+        8       => undef,
         7       => undef,
         default => true
       },

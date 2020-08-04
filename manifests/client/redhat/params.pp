@@ -13,6 +13,9 @@ class nfs::client::redhat::params {
     /^7\.\d+/: {
       $osmajor = 7
     }
+    /^8\.\d+/: {
+      $osmajor = 8
+    }
     # Newer Amazon Linux releases use YYYY.MM (e.g. "2014.09" or "2015.03")
     /^\d{4}\.\d{2}$/: {
       $osmajor = 6
