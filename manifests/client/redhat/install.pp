@@ -10,7 +10,7 @@ class nfs::client::redhat::install {
     ensure => $::nfs::client::package_ensure,
   }
 
-  if $::nfs::client::redhat::params::osmajor == 6 or $::nfs::client::redhat::params::osmajor == 7 {
+  if $::nfs::client::redhat::params::osmajor in [ 6, 7, 8 ] {
     package {'rpcbind':
       ensure => $::nfs::client::package_ensure,
     }
